@@ -1,0 +1,73 @@
+{:deps    {
+           ; https://github.com/clojure/tools.deps
+           org.clojure/tools.deps {:mvn/version "0.31.1629"}
+
+           ; https://github.com/dakrone/cheshire
+           cheshire/cheshire      {:mvn/version "6.2.0"}
+
+           ; https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+           org.slf4j/slf4j-simple {:mvn/version "2.0.18"}
+
+           ; https://clojars.org/org.clj-commons/digest
+           org.clj-commons/digest {:mvn/version "1.4.100"}
+
+           ; https://github.com/babashka/process
+           babashka/process       {:mvn/version "0.6.25"}}
+
+ :paths   ["src" "resources"]
+
+ :aliases {:mvn/artifact-id clj-cdxgen
+           :mvn/group-id    com.github.sikt-no
+           :mvn/version     "0.1.10"
+           :jar/file-name   "target/clj-cdxgen.jar"
+
+           :build           {:deps       {io.github.clojure/tools.build {:git/tag "v0.10.3" :git/sha "15ead66"}}
+                             :paths      ["ci"]
+                             :ns-default build}
+
+           :jar             {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
+                             :exec-fn      hf.depstar/jar
+                             :exec-args    {:jar         :jar/file-name
+                                            :artifact-id :mvn/artifact-id
+                                            :group-id    :mvn/group-id
+                                            :version     :mvn/version
+                                            :sync-pom    true}}
+
+           :install         {:replace-deps {slipset/deps-deploy {:mvn/version "0.2.1"}}
+                             :exec-fn      deps-deploy.deps-deploy/deploy
+                             :exec-args    {:installer :local
+                                            :artifact  :jar/file-name}}
+
+           :deploy          {:replace-deps {slipset/deps-deploy {:mvn/version "0.2.2"}}
+                             :exec-fn      deps-deploy.deps-deploy/deploy
+                             :exec-args    {:installer :remote
+                                            :artifact  :jar/file-name}}
+
+           :dev             {:extra-paths []
+                             :extra-deps  {}}
+
+           :pre-commit      {:paths   ["bin"]
+                             :deps    {babashka/process {:mvn/version "0.6.25"}}
+                             :exec-fn pre-commit-no-dev-lines-enabled/run}
+
+           :test            {:extra-paths ["test" "test-resources"]
+                             :extra-deps  {io.github.cognitect-labs/test-runner
+                                           {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
+
+                             :jvm-opts    ["-Dclj-commons.ansi.enabled=true"]
+                             :exec-fn     cognitect.test-runner.api/test}
+
+           :clj-kondo       {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2026.08.04"}}
+                             :main-opts  ["--main" "clj-kondo.main"
+                                          "--fail-level" "error"
+                                          "--report-level" "error"
+                                          "--lint" "src" "test"]}
+
+           :kaocha          {:extra-deps {lambdaisland/kaocha {:mvn/version "1.91.1392"}}
+                             :main-opts  ["-m" "kaocha.runner"
+                                          "--no-randomize"
+                                          ;"--focus" "clj-cdxgen.basic-test/maven-purl"
+                                          "--fail-fast"]
+
+                             :jvm-opts   ["-Dcdxgen.progress.silent=true"
+                                          "-Dclj-commons.ansi.enabled=true"]}}}

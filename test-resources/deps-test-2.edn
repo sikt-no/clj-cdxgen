@@ -1,0 +1,5 @@
+{:deps {;clj-http/clj-http                 {:mvn/version "3.13.1"}
+        org.clojure/clojure              {:mvn/version "1.12.4"}
+        org.apache.xmlgraphics/batik-ext {:mvn/version   "1.9.1"
+                                          :mvn/extension "zip"}}}
+; /var/folders/py/13srl4fn4fdfmgqxzmfjjxdw0000gn/T/cdxgen-m213651556990737088261/org/apache/xmlgraphics/batik-ext/1.9.1/batik-ext-1.9.1.jar

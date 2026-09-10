@@ -1,0 +1,65 @@
+name: Tag and Release
+on: workflow_dispatch
+
+jobs:
+  tag-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # NOTE: Fetch all for counting commits
+          fetch-depth: 0
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: 11
+      - uses: DeLaGuardo/setup-clojure@master
+        with:
+          cli: latest
+
+
+      - name: Create SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          SSH_PUBLIC_KEY: ${{secrets.SSH_PUBLIC_KEY}}
+        run: |
+          mkdir -p "$HOME/.ssh/"
+          echo "$SSH_PRIVATE_KEY" > "$HOME/.ssh/id_ed25519"
+          chmod 600 "$HOME/.ssh/id_ed25519"
+          echo "$SSH_PUBLIC_KEY" > "$HOME/.ssh/id_ed25519.pub"
+          chmod 600 "$HOME/.ssh/id_ed25519.pub"
+
+
+      - name: Show versions and check SSH
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          java -version
+          clojure --version
+
+
+      - name: Run tests, lint, etc
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          clojure -T:pre-commit
+          clojure -M:clj-kondo
+          clojure -X:test
+
+
+      - name: Release and deploy to clojars
+        id: deploy
+        run: |
+          git config --global user.email "github-actions@example.com"
+          git config --global user.name "github-actions"
+          clojure -T:build bump-patch
+          git push
+          git push --follow-tags
+          clojure -T:jar
+          clojure -T:build add-license!
+          clojure -T:deploy
+        env:
+          CLOJARS_PASSWORD: ${{secrets.CLOJARS_PASSWORD}}
+          CLOJARS_USERNAME: ${{secrets.CLOJARS_USERNAME}}
+

@@ -1,0 +1,1 @@
+{:linters {:single-operand-comparison {:level :error}}}

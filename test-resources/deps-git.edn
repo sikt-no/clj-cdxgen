@@ -1,0 +1,6 @@
+{:deps {org.clojure/clojure                  {:mvn/version "1.12.4"}
+        com.github.ivarref/finddep           {:git/tag "0.1.77" :git/sha "eb873c7f7a8f6240b60651bbbb770e6d3173eeea"}
+        io.github.cognitect-labs/test-runner {:git/tag "v0.5.1" :git/sha "dfb30dd"}
+        org.codeberg.ivarref/cx              {:git/url "https://codeberg.org/ivarref/cx.git" :git/sha "6e96cd2750603c61e0a36468dbf08feed4fbafe8"}
+        com.clojure/spec.alpha               {:git/url "git@github.com:clojure/spec.alpha.git" :git/sha "a65fb3aceec67d1096105cab707e6ad7e5f063af"}}}
+;com.clojure/spec.alpha2              {:git/url "https://github.com/clojure/spec.alpha.git" :git/sha "739c1af56dae621aedf1bb282025a0d676eff713"}}}

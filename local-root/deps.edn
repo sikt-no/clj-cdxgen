@@ -1,0 +1,1 @@
+{:deps {io.github.tonsky/clj-reload {:mvn/version "1.0.0"}}}

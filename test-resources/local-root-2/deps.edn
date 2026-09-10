@@ -1,0 +1,2 @@
+{:deps {org.clojure/clojure  {:mvn/version "1.12.4"}
+        io.github.tonsky/clj-reload {:mvn/version "1.0.0"}}}

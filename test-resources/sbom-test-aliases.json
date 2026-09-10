@@ -1,0 +1,450 @@
+{
+  "bomFormat" : "CycloneDX",
+  "specVersion" : "1.6",
+  "serialNumber" : "urn:uuid:8e967257-36da-4858-b1c1-60722d9fc469",
+  "version" : 1,
+  "metadata" : {
+    "timestamp" : "2026-02-13T18:48:15Z",
+    "tools" : {
+      "components" : [ {
+        "type" : "library",
+        "group" : "com.github.sikt-no",
+        "name" : "clj-cdxgen",
+        "version" : "unknown"
+      } ]
+    },
+    "lifecycles" : [ {
+      "phase" : "build"
+    } ],
+    "component" : {
+      "group" : "org.codeberg",
+      "name" : "clj-cdxgen",
+      "version" : "self-version",
+      "purl" : "pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e",
+      "bom-ref" : "pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e",
+      "type" : "application"
+    }
+  },
+  "components" : [ {
+    "bom-ref" : "pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e",
+    "group" : "org.codeberg",
+    "name" : "clj-cdxgen",
+    "version" : "self-version",
+    "purl" : "pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "self-version"
+    } ],
+    "type" : "application"
+  }, {
+    "bom-ref" : "standard-alias-pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e",
+    "group" : "standard-alias-org.codeberg",
+    "name" : "standard-alias-clj-cdxgen",
+    "version" : "self-version",
+    "purl" : "pkg:generic/asdf-standard-alias/asdf-standard-alias@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "self-version"
+    } ],
+    "type" : "application"
+  }, {
+    "bom-ref" : "standard-alias-pkg:maven/io.github.tonsky/clj-reload@1.0.0?type=jar&repository_url=https://repo.clojars.org/",
+    "group" : "io.github.tonsky",
+    "name" : "clj-reload",
+    "version" : "1.0.0",
+    "purl" : "pkg:maven/io.github.tonsky/clj-reload@1.0.0?type=jar&repository_url=https://repo.clojars.org/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "71950c3919876196737a1a045787a41bbd792313fe5919d9d12b64fd88449a31"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "standard-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-buffer",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "00a522b67ea35cb7b4dd9cf27f85c6c58f5e306785aa045302e5f6b2d4944a87"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "standard-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-common",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "53921f28dd5a352b1bed0e1cbcc54d013dc60ffebeae9b2b1e53eabef317e581"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "standard-alias-pkg:maven/io.netty/netty-resolver@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-resolver",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-resolver@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "48c5b218a89d184e1b601d46433957f515fcefdb4464182b1348bce4f5a18f35"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "standard-alias-pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-transport",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "1bf573266d271f856705a9984d25449c56a1d73c02a16af12033ceccfe555dbb"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "standard-alias-pkg:maven/io.netty/netty-transport-classes-epoll@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-transport-classes-epoll",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-transport-classes-epoll@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "1c352508d70aca1ccc3068daac907ad1e9d8dc68b07148d57426730bf0d0c8b6"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "standard-alias-pkg:maven/io.netty/netty-transport-native-epoll@4.1.130.Final?classifier=linux-x86_64&type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-transport-native-epoll",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-transport-native-epoll@4.1.130.Final?classifier=linux-x86_64&type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "d5d4611cb667eb215667c65aabfc75f8d9ef24de2a3e3a32eb28204f9c2a7a30"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "standard-alias-pkg:maven/io.netty/netty-transport-native-unix-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-transport-native-unix-common",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-transport-native-unix-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "cf5efc4168597d7cd14695b469418cac2a1134533f9a0c82ef0538d796fd39e1"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "standard-alias-pkg:maven/org.clojure/clojure@1.12.4?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "org.clojure",
+    "name" : "clojure",
+    "version" : "1.12.4",
+    "purl" : "pkg:maven/org.clojure/clojure@1.12.4?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "4b81e9ba6da38c45d9cc58023c674062b8c9f0714f33ff00ded22e6a949da177"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "standard-alias-pkg:maven/org.clojure/core.specs.alpha@0.4.74?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "org.clojure",
+    "name" : "core.specs.alpha",
+    "version" : "0.4.74",
+    "purl" : "pkg:maven/org.clojure/core.specs.alpha@0.4.74?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "eb73ac08cf49ba840c88ba67beef11336ca554333d9408808d78946e0feb9ddb"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "standard-alias-pkg:maven/org.clojure/spec.alpha@0.5.238?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "org.clojure",
+    "name" : "spec.alpha",
+    "version" : "0.5.238",
+    "purl" : "pkg:maven/org.clojure/spec.alpha@0.5.238?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "94cd99b6ea639641f37af4860a643b6ed399ee5a8be5d717cff0b663c8d75077"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e",
+    "group" : "test-alias-org.codeberg",
+    "name" : "test-alias-clj-cdxgen",
+    "version" : "self-version",
+    "purl" : "pkg:generic/asdf-test-alias/asdf-test-alias@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "self-version"
+    } ],
+    "type" : "application"
+  }, {
+    "bom-ref" : "test-alias-pkg:generic/io.github.cognitect-labs/test-runner@v0.5.1?vcs_url=git%2Bhttps://github.com/cognitect-labs/test-runner%40dfb30dd6605cb6c0efc275e1df1736f6e90d4d73",
+    "group" : "io.github.cognitect-labs",
+    "name" : "test-runner",
+    "version" : "dfb30dd6605cb6c0efc275e1df1736f6e90d4d73",
+    "purl" : "pkg:generic/io.github.cognitect-labs/test-runner@v0.5.1?vcs_url=git%2Bhttps://github.com/cognitect-labs/test-runner%40dfb30dd6605cb6c0efc275e1df1736f6e90d4d73",
+    "hashes" : [ {
+      "alg" : "SHA-1",
+      "content" : "dfb30dd6605cb6c0efc275e1df1736f6e90d4d73"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/io.github.tonsky/clj-reload@1.0.0?type=jar&repository_url=https://repo.clojars.org/",
+    "group" : "io.github.tonsky",
+    "name" : "clj-reload",
+    "version" : "1.0.0",
+    "purl" : "pkg:maven/io.github.tonsky/clj-reload@1.0.0?type=jar&repository_url=https://repo.clojars.org/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "71950c3919876196737a1a045787a41bbd792313fe5919d9d12b64fd88449a31"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-buffer",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "00a522b67ea35cb7b4dd9cf27f85c6c58f5e306785aa045302e5f6b2d4944a87"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-common",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "53921f28dd5a352b1bed0e1cbcc54d013dc60ffebeae9b2b1e53eabef317e581"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/io.netty/netty-resolver@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-resolver",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-resolver@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "48c5b218a89d184e1b601d46433957f515fcefdb4464182b1348bce4f5a18f35"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-transport",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "1bf573266d271f856705a9984d25449c56a1d73c02a16af12033ceccfe555dbb"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/io.netty/netty-transport-classes-epoll@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-transport-classes-epoll",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-transport-classes-epoll@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "1c352508d70aca1ccc3068daac907ad1e9d8dc68b07148d57426730bf0d0c8b6"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/io.netty/netty-transport-native-epoll@4.1.130.Final?classifier=linux-x86_64&type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-transport-native-epoll",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-transport-native-epoll@4.1.130.Final?classifier=linux-x86_64&type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "d5d4611cb667eb215667c65aabfc75f8d9ef24de2a3e3a32eb28204f9c2a7a30"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/io.netty/netty-transport-native-unix-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "io.netty",
+    "name" : "netty-transport-native-unix-common",
+    "version" : "4.1.130.Final",
+    "purl" : "pkg:maven/io.netty/netty-transport-native-unix-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "cf5efc4168597d7cd14695b469418cac2a1134533f9a0c82ef0538d796fd39e1"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/org.clojure/clojure@1.12.4?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "org.clojure",
+    "name" : "clojure",
+    "version" : "1.12.4",
+    "purl" : "pkg:maven/org.clojure/clojure@1.12.4?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "4b81e9ba6da38c45d9cc58023c674062b8c9f0714f33ff00ded22e6a949da177"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/org.clojure/core.specs.alpha@0.4.74?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "org.clojure",
+    "name" : "core.specs.alpha",
+    "version" : "0.4.74",
+    "purl" : "pkg:maven/org.clojure/core.specs.alpha@0.4.74?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "eb73ac08cf49ba840c88ba67beef11336ca554333d9408808d78946e0feb9ddb"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/org.clojure/java.classpath@1.0.0?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "org.clojure",
+    "name" : "java.classpath",
+    "version" : "1.0.0",
+    "purl" : "pkg:maven/org.clojure/java.classpath@1.0.0?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "c14e0e10304a5e5cfd2cc742fbdefac1f5293eec6070c2ffe8903fb5c7fe7d6f"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/org.clojure/spec.alpha@0.5.238?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "org.clojure",
+    "name" : "spec.alpha",
+    "version" : "0.5.238",
+    "purl" : "pkg:maven/org.clojure/spec.alpha@0.5.238?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "94cd99b6ea639641f37af4860a643b6ed399ee5a8be5d717cff0b663c8d75077"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/org.clojure/tools.cli@1.0.206?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "org.clojure",
+    "name" : "tools.cli",
+    "version" : "1.0.206",
+    "purl" : "pkg:maven/org.clojure/tools.cli@1.0.206?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "6b97d2691919b9ea944a898fec798a90ecb81a17732916edbc73a6f5afd1f616"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/org.clojure/tools.namespace@1.3.0?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "org.clojure",
+    "name" : "tools.namespace",
+    "version" : "1.3.0",
+    "purl" : "pkg:maven/org.clojure/tools.namespace@1.3.0?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "127533ab1e1e7a700c8238ad7d58d4b42c418d6d8f34c304711503bc882e3a70"
+    } ],
+    "type" : "library"
+  }, {
+    "bom-ref" : "test-alias-pkg:maven/org.clojure/tools.reader@1.3.6?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "group" : "org.clojure",
+    "name" : "tools.reader",
+    "version" : "1.3.6",
+    "purl" : "pkg:maven/org.clojure/tools.reader@1.3.6?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "hashes" : [ {
+      "alg" : "SHA-256",
+      "content" : "11d1b31f2c65c3355b292bb9b44b8fcafda54b44da63e34ab97b79a8ab3bb8e0"
+    } ],
+    "type" : "library"
+  } ],
+  "dependencies" : [ {
+    "ref" : "pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e",
+    "dependsOn" : [ "standard-alias-pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e", "test-alias-pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e" ]
+  }, {
+    "ref" : "standard-alias-pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e",
+    "dependsOn" : [ "standard-alias-pkg:maven/io.github.tonsky/clj-reload@1.0.0?type=jar&repository_url=https://repo.clojars.org/", "standard-alias-pkg:maven/io.netty/netty-transport-native-epoll@4.1.130.Final?classifier=linux-x86_64&type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/org.clojure/clojure@1.12.4?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "standard-alias-pkg:maven/io.github.tonsky/clj-reload@1.0.0?type=jar&repository_url=https://repo.clojars.org/",
+    "dependsOn" : [ ]
+  }, {
+    "ref" : "standard-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "standard-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "standard-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ ]
+  }, {
+    "ref" : "standard-alias-pkg:maven/io.netty/netty-resolver@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "standard-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "standard-alias-pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "standard-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/io.netty/netty-resolver@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "standard-alias-pkg:maven/io.netty/netty-transport-classes-epoll@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "standard-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/io.netty/netty-transport-native-unix-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "standard-alias-pkg:maven/io.netty/netty-transport-native-epoll@4.1.130.Final?classifier=linux-x86_64&type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "standard-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/io.netty/netty-transport-classes-epoll@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/io.netty/netty-transport-native-unix-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "standard-alias-pkg:maven/io.netty/netty-transport-native-unix-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "standard-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "standard-alias-pkg:maven/org.clojure/clojure@1.12.4?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "standard-alias-pkg:maven/org.clojure/core.specs.alpha@0.4.74?type=jar&repository_url=https://repo1.maven.org/maven2/", "standard-alias-pkg:maven/org.clojure/spec.alpha@0.5.238?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "standard-alias-pkg:maven/org.clojure/core.specs.alpha@0.4.74?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ ]
+  }, {
+    "ref" : "standard-alias-pkg:maven/org.clojure/spec.alpha@0.5.238?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ ]
+  }, {
+    "ref" : "test-alias-pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e",
+    "dependsOn" : [ "test-alias-pkg:generic/io.github.cognitect-labs/test-runner@v0.5.1?vcs_url=git%2Bhttps://github.com/cognitect-labs/test-runner%40dfb30dd6605cb6c0efc275e1df1736f6e90d4d73", "test-alias-pkg:maven/io.github.tonsky/clj-reload@1.0.0?type=jar&repository_url=https://repo.clojars.org/", "test-alias-pkg:maven/io.netty/netty-transport-native-epoll@4.1.130.Final?classifier=linux-x86_64&type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/org.clojure/clojure@1.12.4?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "test-alias-pkg:generic/io.github.cognitect-labs/test-runner@v0.5.1?vcs_url=git%2Bhttps://github.com/cognitect-labs/test-runner%40dfb30dd6605cb6c0efc275e1df1736f6e90d4d73",
+    "dependsOn" : [ "test-alias-pkg:maven/org.clojure/tools.cli@1.0.206?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/org.clojure/tools.namespace@1.3.0?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "test-alias-pkg:maven/io.github.tonsky/clj-reload@1.0.0?type=jar&repository_url=https://repo.clojars.org/",
+    "dependsOn" : [ ]
+  }, {
+    "ref" : "test-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "test-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "test-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ ]
+  }, {
+    "ref" : "test-alias-pkg:maven/io.netty/netty-resolver@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "test-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "test-alias-pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "test-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/io.netty/netty-resolver@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "test-alias-pkg:maven/io.netty/netty-transport-classes-epoll@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "test-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/io.netty/netty-transport-native-unix-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "test-alias-pkg:maven/io.netty/netty-transport-native-epoll@4.1.130.Final?classifier=linux-x86_64&type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "test-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/io.netty/netty-transport-classes-epoll@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/io.netty/netty-transport-native-unix-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "test-alias-pkg:maven/io.netty/netty-transport-native-unix-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "test-alias-pkg:maven/io.netty/netty-buffer@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/io.netty/netty-common@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/io.netty/netty-transport@4.1.130.Final?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "test-alias-pkg:maven/org.clojure/clojure@1.12.4?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "test-alias-pkg:maven/org.clojure/core.specs.alpha@0.4.74?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/org.clojure/spec.alpha@0.5.238?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "test-alias-pkg:maven/org.clojure/core.specs.alpha@0.4.74?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ ]
+  }, {
+    "ref" : "test-alias-pkg:maven/org.clojure/java.classpath@1.0.0?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ ]
+  }, {
+    "ref" : "test-alias-pkg:maven/org.clojure/spec.alpha@0.5.238?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ ]
+  }, {
+    "ref" : "test-alias-pkg:maven/org.clojure/tools.cli@1.0.206?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ ]
+  }, {
+    "ref" : "test-alias-pkg:maven/org.clojure/tools.namespace@1.3.0?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ "test-alias-pkg:maven/org.clojure/java.classpath@1.0.0?type=jar&repository_url=https://repo1.maven.org/maven2/", "test-alias-pkg:maven/org.clojure/tools.reader@1.3.6?type=jar&repository_url=https://repo1.maven.org/maven2/" ]
+  }, {
+    "ref" : "test-alias-pkg:maven/org.clojure/tools.reader@1.3.6?type=jar&repository_url=https://repo1.maven.org/maven2/",
+    "dependsOn" : [ ]
+  } ]
+}

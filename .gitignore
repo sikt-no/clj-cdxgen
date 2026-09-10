@@ -1,0 +1,12 @@
+.nrepl-port
+.nrepl-history
+.direnv/
+.cpcache/
+.clj-kondo/.cache/
+.nrepl*port
+pom.xml
+target/
+
+.idea
+*.iml
+m2-cdxgen/
