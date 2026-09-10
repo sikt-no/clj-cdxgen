@@ -18,7 +18,7 @@
 
  :aliases {:mvn/artifact-id clj-cdxgen
            :mvn/group-id    com.github.sikt-no
-           :mvn/version     "0.1.10"
+           :mvn/version     "0.1.11"
            :jar/file-name   "target/clj-cdxgen.jar"
 
            :build           {:deps       {io.github.clojure/tools.build {:git/tag "v0.10.3" :git/sha "15ead66"}}

@@ -7,7 +7,7 @@ Creates CycloneDX Bill of Materials (BOM) for your Clojure deps.edn project.
 Add a new alias to `deps.edn` with the following contents:
 
 ```clojure
-{:deps    {com.github.sikt-no/clj-cdxgen {:mvn/version "0.1.10"}}
+{:deps    {com.github.sikt-no/clj-cdxgen {:mvn/version "0.1.11"}}
  :exec-fn cdxgen.core/write-sbom!}
 ```
 

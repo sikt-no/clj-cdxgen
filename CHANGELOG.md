@@ -4,6 +4,8 @@ log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [0.1.11] - 2026-09-10
+
 ## [0.1.10] - 2026-09-10
 
 ## [0.1.9] - 2026-09-10
