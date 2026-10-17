@@ -37,7 +37,6 @@
             [clojure.tools.deps.extensions :as ext]
             [cdxgen.progress-bar :as pg]
             [babashka.process :as process])
-  (:refer-clojure :exclude [name type ref])
   (:import
     (clojure.lang Symbol)
     [java.io File]
@@ -194,7 +193,7 @@
     (transferStarted [_ event]
       (let [event ^TransferEvent event
             resource (.getResource event)
-            name (.getResourceName resource)
+            name' (.getResourceName resource)
             repo (.getRepositoryId resource)]
         #_(print ".")
         #_(flush)
@@ -220,7 +219,7 @@
       (transferStarted [_ event]
         (let [event ^TransferEvent event
               resource (.getResource event)
-              name (.getResourceName resource)
+              name' (.getResourceName resource)
               repo (.getRepositoryId resource)
               cnt (swap! total-downloads inc)]
           (printerr (pg/marine-line-len-seed
@@ -249,7 +248,7 @@
     (transferStarted [_ event]
       (let [event ^TransferEvent event
             resource (.getResource event)
-            name (.getResourceName resource)
+            name' (.getResourceName resource)
             repo (.getRepositoryId resource)
             _cnt (swap! total-downloads inc)]
         #_(printerr (pg/marine-line-len-seed
@@ -467,19 +466,19 @@
 (defn- url-encode [x]
   (URLEncoder/encode ^String x StandardCharsets/UTF_8))
 
-(defn self-bom-component [{:keys [name bom-ref group purl version type]}]
+(defn self-bom-component [{:keys [bom-ref group purl version] :as component}]
   (array-map
     :bom-ref bom-ref
     :group group
-    :name name
+    :name (get component :name)
     :version version
     :purl purl
     :hashes [{:alg     "SHA-256"
               :content version}]
-    :type type))
+    :type (get component :type)))
 
 (defn self-bom-local-component [{:keys [bom-ref purl version]}
-                                {:keys [^Symbol lib] :as coord}]
+                                {:keys [^Symbol lib] :as _coord}]
   (array-map
     :bom-ref (str bom-ref "#" lib)
     :group (.getNamespace lib)
@@ -714,8 +713,8 @@
                                      (vec))]
           (swap! dependencies conj (array-map :ref bom-ref' :dependsOn dependents-bomref)))))
     (->> @dependencies
-         (mapv (fn [{:keys [ref dependsOn]}]
-                 (array-map :ref ref
+         (mapv (fn [{:keys [dependsOn] :as dependency}]
+                 (array-map :ref (get dependency :ref)
                             :dependsOn (vec (distinct (sort dependsOn)))))))))
 
 (defn directory? [^File f]
@@ -781,12 +780,14 @@
                         (assert (not-empty (seq x)))
                         x))
 
-(defn- bom-entries->sbom-json [{:keys [epoch-seconds group name purl type version tool-version pretty?]}
+(defn- bom-entries->sbom-json [{:keys [epoch-seconds group purl version tool-version pretty?] :as component}
                                bom-entries
                                dependencies]
   (let [header (json/parse-string
                  (slurp (jio/resource "cdx-bomheader.json"))
                  keyword)
+        name' (get component :name)
+        type' (get component :type)
         ;"component": {
         ;      "group": "authenticator",
         ;      "name": "authenticator",
@@ -813,11 +814,11 @@
                    :lifecycles [{:phase "build"}]
                    :component (array-map
                                 :group (not-empty-string group)
-                                :name (not-empty-string name)
+                                :name (not-empty-string name')
                                 :version (not-empty-string version)
                                 :purl (not-empty-string purl)
                                 :bom-ref (not-empty-string purl)
-                                :type (not-empty-string type)))
+                                :type (not-empty-string type')))
         sbom (array-map
                :bomFormat (:bomFormat header)
                :specVersion (:specVersion header)
@@ -829,15 +830,15 @@
         json-out (json/generate-string sbom {:pretty pretty?})]
     json-out))
 
-(defn add-name-to-purl [purl name]
+(defn add-name-to-purl [purl name']
   (let [parts (str/split purl #"/")
         third (nth parts 2)
         parts-at (str/split third #"@")]
     (str/join "/"
               (into [(first parts)
-                     (str (second parts) "-" name)
+                     (str (second parts) "-" name')
                      (str/join "@"
-                               (into [(str (first parts-at) "-" name)]
+                               (into [(str (first parts-at) "-" name')]
                                      (drop 1 parts-at)))]
                     (drop 3 parts)))))
 
@@ -845,8 +846,8 @@
     (let [purl "pkg:generic/authenticator/authenticator@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@gitlab.sikt.no:raird/authenticator.git%40bee00c76fa69eccdd8653b916a5452bba719e78e"]
       (println (add-name-to-purl purl "build-alias"))))
 
-(defn get-alias-type [deps-edn alias]
-  (if-let [alias' (get-in deps-edn [:aliases alias])]
+(defn get-alias-type [deps-edn alias'']
+  (if-let [alias' (get-in deps-edn [:aliases alias''])]
     (when (map? alias')
       (cond (contains? alias' :extra-deps)
             :extra-deps
@@ -861,8 +862,8 @@
             nil))
     nil))
 
-(defn new-deps-edn-file [deps-edn alias alias-type]
-  (let [deps-map (get-in deps-edn [:aliases alias alias-type])
+(defn new-deps-edn-file [deps-edn alias' alias-type]
+  (let [deps-map (get-in deps-edn [:aliases alias' alias-type])
         _ (assert (map? deps-map))
         deps-output (-> deps-edn
                         (assoc :deps deps-map)
@@ -890,21 +891,21 @@
           deps-edn (edn/read-string (slurp deps-edn-file))
           aliases' (into [{:name "standard-alias" :deps-edn-file deps-edn-file :aliases []}]
                          (->> (sort aliases)
-                              (mapcat (fn [alias]
-                                        (if-let [alias-type' (get-alias-type deps-edn alias)]
-                                          (let [name' (str (clojure.core/name alias) "-alias")]
+                              (mapcat (fn [alias']
+                                        (if-let [alias-type' (get-alias-type deps-edn alias')]
+                                          (let [name' (str (clojure.core/name alias') "-alias")]
                                             (cond
                                               (= alias-type' :extra-deps)
                                               [{:name          name'
                                                 :deps-edn-file deps-edn-file
-                                                :aliases       [alias]}]
+                                                :aliases       [alias']}]
                                               (= alias-type' :deps)
                                               [{:name          name'
-                                                :deps-edn-file (new-deps-edn-file deps-edn alias alias-type')
+                                                :deps-edn-file (new-deps-edn-file deps-edn alias' alias-type')
                                                 :aliases       []}]
                                               (= alias-type' :replace-deps)
                                               [{:name          name'
-                                                :deps-edn-file (new-deps-edn-file deps-edn alias alias-type')
+                                                :deps-edn-file (new-deps-edn-file deps-edn alias' alias-type')
                                                 :aliases       []}]))
                                           [])))
                               (vec)))
@@ -974,9 +975,9 @@
 (defn all-valid-aliases [deps]
   (->> (get deps :aliases {})
        (keys)
-       (mapv (fn [alias]
-               (when (get-alias-type deps alias)
-                 alias)))
+       (mapv (fn [alias']
+               (when (get-alias-type deps alias')
+                 alias')))
        (filterv some?)
        (sort)
        (vec)))
@@ -987,11 +988,13 @@
   #_(println (all-valid-aliases (edn/read-string (slurp "deps.edn")))))
 
 (defn adapted-opts
-  [{:keys [deps-edn-file out-file epoch-seconds group progress name version purl
-           err-exit-fn type exclude-aliases]
+  [{:keys [deps-edn-file out-file epoch-seconds group progress version purl
+           err-exit-fn exclude-aliases]
     :as   opts}
-   now-epoch-seconds]
+   now-epoch-seconds2]
   (let [deps-edn-file' (or deps-edn-file "deps.edn")
+        name' (get opts :name)
+        type' (get opts :type)
         err-exit-fn' (or err-exit-fn
                          (fn [_code] (throw (IllegalStateException. "Aborting"))))
         _ (when (not (.exists (jio/file deps-edn-file')))
@@ -1013,13 +1016,13 @@
                    :default)
         opts' {:deps-edn-file   (not-empty-string deps-edn-file')
                :out-file        (not-empty-string (or out-file "sbom.json"))
-               :epoch-seconds   (let [v (or epoch-seconds now-epoch-seconds)]
+               :epoch-seconds   (let [v (or epoch-seconds now-epoch-seconds2)]
                                   (assert (pos-int? v))
                                   v)
                :group           (not-empty-string (or group @default-name))
-               :name            (not-empty-string (or name @default-name))
+               :name            (not-empty-string (or name' @default-name))
                :version         (not-empty-string (or version (git-head-sha ".")))
-               :type            (not-empty-string (or type "application"))
+               :type            (not-empty-string (or type' "application"))
                :tool-version    (if-let [v (find-version "com.github.sikt-no" "clj-cdxgen")]
                                   v
                                   "unknown")
