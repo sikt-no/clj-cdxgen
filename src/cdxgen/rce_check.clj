@@ -40,8 +40,11 @@
 
 (def condo-cfg
   "{:linters {
-              :single-operand-comparison {:level :error}\n
-              :discouraged-var           {:level :error\n clojure.core/read-string {:message \"Use edn/read-string instead of read-string\"}}
+              ;:single-operand-comparison {:level :error}\n
+              :discouraged-var           {:level :error\n
+                                          ;clojure.core/read-string {:message \"Use edn/read-string\"}\n
+                                          clojure.core/eval       {:message \"Eval: Just dont do it\"}\n
+                                          }
               }}\n")
 
 
@@ -156,12 +159,14 @@
 
 
 (def errors (atom {}))
+(def error-libs (atom (sorted-set)))
 
 
 (def error-count (atom 0))
 
 
-(defn process-bytes [{:keys [verbose?]} lib version jar-path filename all-bytes]
+(defn process-bytes [{:keys [clj-kondo-config verbose? fail-fast?]}
+                     lib mvn-version jar-path filename all-bytes]
   (let [stdin (^[byte/1 Charset] String/new all-bytes StandardCharsets/UTF_8)
         lang (if (str/ends-with? filename ".cljc")
                "--lang cljc"
@@ -171,13 +176,14 @@
                             :err :string}
                            (str "clj-kondo --report-level error --fail-level error "
                                 lang " "
-                                "--config '^:replace" condo-cfg "'" " "
+                                "--config '^:replace" clj-kondo-config "'" " "
                                 "--lint -"))]
     (when (not= 0 (:exit res))
       (do
         (swap! errors
                (fn [old-errors]
-                 (assoc old-errors [lib version] true)))
+                 (assoc old-errors [lib mvn-version] true)))
+        (swap! error-libs conj lib)
         (println "Error in library" lib)
         (println indent "JAR:" (str jar-path))
         (println indent "File:" (str filename))
@@ -188,24 +194,26 @@
               (if (str/starts-with? lin "<stdin>:")
                 (do
                   (swap! error-count inc)
+                  (println indent (str "Line: " (subs lin (count "<stdin>:"))))
                   (let [loc-info (first (str/split lin #"\s+"))
                         loc-info2 (subs loc-info (count "<stdin>:"))
                         line-number (parse-long (first (str/split loc-info2 #":")))
                         start-line (max 1 (- line-number 10))
                         cmd (str "bat --language=clojure --force-colorization "
                                  "--highlight-line " line-number " "
-                                 "--line-range " start-line ":+20")
-                        _res2 nil #_@(proc/process {:in  stdin
-                                                    :out :inherit
-                                                    :err :inherit}
-                                                   (str "bat --language=clojure --force-colorization "
-                                                        "--highlight-line " line-number " "
-                                                        "--line-range " start-line ":+20"))]
-                    (println indent (str "Line: " (subs lin (count "<stdin>:"))
-                                         ". To have a peek, execute:"))
+                                 "--line-rarge " (max 1 (- line-number 30)) ":+30")
+                        _res2 (when fail-fast?
+                                (let [first-n-lines (->> (str/split-lines stdin)
+                                                         (take (+ 20 start-line)))]
+                                  @(proc/process {:in  (str/join "\n" first-n-lines)
+                                                  :out :inherit
+                                                  :err :inherit}
+                                                 (str "bat --language=clojure --force-colorization"
+                                                      " --highlight-line " line-number " "
+                                                      " --line-range " start-line ":+20"))))]
+                    (println indent (str "To have a further peek, execute:"))
                     (when true
                       (println indent "unzip -p" jar-path filename "\\")
-                      #_(println indent filename "\\")
                       (println indent "|" cmd))
                     #_(doseq [lin' (str/split-lines (:out res2))]
                         (let [lin'' (str/trim lin')]
@@ -215,7 +223,7 @@
           (println (str/trim (:err res))))))))
 
 
-(defn check-jar [{:keys [verbose?] :as opts} lib version jar-path]
+(defn check-jar [{:keys [verbose?] :as opts} lib mvn-version jar-path]
   #_(println "checking" jar-path "...")
   (with-open [fis (FileInputStream. (io/file jar-path))
               bis (BufferedInputStream. fis)
@@ -225,9 +233,9 @@
         (let [nam (.getName entry)]
           (when (or (str/ends-with? nam ".clj")
                     (str/ends-with? nam ".cljc"))
-            (process-bytes opts lib version jar-path nam (.readAllBytes zis))))
+            (process-bytes opts lib mvn-version jar-path nam (.readAllBytes zis))))
         (recur))))
-  (if (nil? (get @errors [lib version]))
+  (if (nil? (get @errors [lib mvn-version]))
     (when verbose?
       #_(println "OK JAR:" jar-path))
     (when verbose?
@@ -278,16 +286,47 @@
         @result))))
 
 
-(defn scan! [{:keys [verbose?] :as opts}]
+(defn scan! [{:keys [verbose? focus clj-kondo-config fail-fast? whitelist] :as opts}]
   (let [aliases'' (all-valid-aliases (edn/read-string (slurp "deps.edn")))
-        all-jars (atom (sorted-set))]
+        all-jars (atom (sorted-set))
+        whitelist' (or whitelist #{})
+        all-jars2 (atom (sorted-set))
+        skip-count (atom 0)]
+    (assert (set? whitelist'))
+    (assert (string? clj-kondo-config))
     (doseq [alias' aliases'']
       (swap! all-jars set/union (alias->jars "deps.edn" alias')))
-    (println "Found" (count @all-jars) "JARs to analyze")
-    (doseq [[k v path] (into (sorted-set) @all-jars)]
-      (println "Processing" k v)
-      (check-jar opts k v path))
-    (println "Processed" (count @all-jars) "JARs."
+    (doseq [[lib mvn-version path] (into (sorted-set) @all-jars)]
+      (assert (string? mvn-version))
+      (when (contains? whitelist' [lib (str mvn-version)])
+        nil #_(println "Skipping" lib mvn-version))
+      (if (not= nil focus)
+        (if (= focus lib)
+          (swap! all-jars2 conj [lib mvn-version path])
+          (swap! skip-count inc))
+        (if (or (contains? whitelist' lib)
+                (contains? whitelist' [lib (str mvn-version)])
+                (and (not= nil focus)
+                     (= focus lib)))
+          (swap! skip-count inc)
+          (swap! all-jars2 conj [lib mvn-version path])
+          #_(println "skipping" lib))))
+    (println "Found" (count @all-jars2) "JARs to analyze (skipping" @skip-count "JARs)")
+    (doseq [[lib mvn-version path] (into (sorted-set) @all-jars2)]
+      (check-jar opts lib mvn-version path)
+      (when (not= 0 @error-count)
+        (when fail-fast?
+          (println "Failing fast! Error count:" @error-count "lib ="
+                   (str "\n[" lib
+                        " "
+                        (str "\"" mvn-version "\"")
+                        "]"))
+          (System/exit 1))))
+    (when (not= 0 @error-count)
+      (println "Error libraries:")
+      (doseq [lib @error-libs]
+        (println indent lib)))
+    (println "Processed" (count @all-jars2) "JARs."
              "Error count:" @error-count)))
 
 
