@@ -178,7 +178,7 @@
         (swap! errors
                (fn [old-errors]
                  (assoc old-errors [lib version] true)))
-        (println "Lint error in library" lib)
+        (println "Error in library" lib)
         (println indent "JAR:" (str jar-path))
         (println indent "File:" (str filename))
         (when (not= "" (:out res))
@@ -201,7 +201,7 @@
                                                    (str "bat --language=clojure --force-colorization "
                                                         "--highlight-line " line-number " "
                                                         "--line-range " start-line ":+20"))]
-                    (println indent (str (subs lin (count "<stdin>:"))
+                    (println indent (str "Line: " (subs lin (count "<stdin>:"))
                                          ". To have a peek, execute:"))
                     (when true
                       (println indent "unzip -p" jar-path filename "\\")
