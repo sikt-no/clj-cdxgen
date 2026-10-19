@@ -16,7 +16,11 @@ clojure -Ttools install com.github.sikt-no/clj-cdxgen \
 clojure -Tcdxgen-dev cdxgen.rce-check/scan! "$@" \
 :whitelist '#{
              clj-kondo/clj-kondo
-             com.cognitect.aws/api
+             [com.cognitect.aws/api "0.8.515"]
+             [com.cognitect.aws/api "0.8.539"]
+             [com.cognitect.aws/api "0.8.612"]
+             [com.cognitect.aws/api "0.8.686"]
+             [com.cognitect.aws/api "0.8.824"]
              lambdaisland/kaocha
              org.clojure/clojure
              org.clojure/core.rrb-vector

@@ -184,15 +184,15 @@
                (fn [old-errors]
                  (assoc old-errors [lib mvn-version] true)))
         (swap! error-libs conj lib)
-        (println "Error in library" lib)
-        (println indent "JAR:" (str jar-path))
-        (println indent "File:" (str filename))
         (when (not= "" (:out res))
           (doseq [lin (str/split-lines (str/trim (:out res)))]
             (when (not= lin "")
               #_(println indent lin)
               (if (str/starts-with? lin "<stdin>:")
                 (do
+                  (println "Error in library" lib)
+                  (println indent "JAR:" (str jar-path))
+                  (println indent "File:" (str filename))
                   (swap! error-count inc)
                   (println indent (str "Line: " (subs lin (count "<stdin>:"))))
                   (let [loc-info (first (str/split lin #"\s+"))
@@ -213,7 +213,13 @@
                                                       " --line-range " start-line ":+20"))))]
                     (println indent (str "To have a further peek, execute:"))
                     (when true
-                      (println indent "unzip -p" jar-path filename "\\")
+                      (println indent "unzip -p"
+                               (str "\""
+                                    (str/replace jar-path
+                                                 (System/getProperty "user.home")
+                                                 "$HOME")
+                                    "\"")
+                               filename "\\")
                       (println indent "|" cmd))
                     #_(doseq [lin' (str/split-lines (:out res2))]
                         (let [lin'' (str/trim lin')]
