@@ -30,7 +30,7 @@
             [clojure.set :as set]
             [clojure.string :as str]
             [clojure.tools.deps :as deps]
-            [cheshire.core :as json]
+            [clojure.data.json :as json]
             [clojure.tools.deps.util.maven :as maven]
             [clojure.tools.deps.util.session :as session]
             [clj-commons.digest :as clj-commons-digest]
@@ -783,9 +783,9 @@
 (defn- bom-entries->sbom-json [{:keys [epoch-seconds group purl version tool-version pretty?] :as component}
                                bom-entries
                                dependencies]
-  (let [header (json/parse-string
+  (let [header (json/read-str
                  (slurp (jio/resource "cdx-bomheader.json"))
-                 keyword)
+                 {:key-fn keyword})
         name' (get component :name)
         type' (get component :type)
         ;"component": {
@@ -827,7 +827,7 @@
                :metadata metadata
                :components bom-entries
                :dependencies dependencies)
-        json-out (json/generate-string sbom {:pretty pretty?})]
+        json-out (json/write-str sbom {:indent pretty?})]
     json-out))
 
 (defn add-name-to-purl [purl name']
@@ -843,8 +843,14 @@
                     (drop 3 parts)))))
 
 #_(defn dev []
-    (let [purl "pkg:generic/authenticator/authenticator@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@gitlab.sikt.no:raird/authenticator.git%40bee00c76fa69eccdd8653b916a5452bba719e78e"]
-      (println (add-name-to-purl purl "build-alias"))))
+    (println (json-old/parse-string
+               (slurp (jio/resource "cdx-bomheader.json"))
+               keyword))
+    (let [x (json/read-str
+              (slurp (jio/resource "cdx-bomheader.json"))
+              {:key-fn keyword})]
+      (println x)
+      (println (json/write-str x {:indent true}))))
 
 (defn get-alias-type [deps-edn alias'']
   (if-let [alias' (get-in deps-edn [:aliases alias''])]
@@ -982,10 +988,6 @@
        (sort)
        (vec)))
 
-(defn dev []
-  (let [p "/Users/ire/code/raird/user-service/authenticator"]
-    (println (git-remote-origin p)))
-  #_(println (all-valid-aliases (edn/read-string (slurp "deps.edn")))))
 
 (defn adapted-opts
   [{:keys [deps-edn-file out-file epoch-seconds group progress version purl

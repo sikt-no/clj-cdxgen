@@ -23,7 +23,7 @@
 ;   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 ;   OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (ns clj-cdxgen.basic-test
-  (:require [cheshire.core :as json]
+  (:require [clojure.data.json :as json]
             [clojure.edn :as edn]
             [clojure.java.io :as jio]
             [clojure.string :as str]
@@ -47,7 +47,7 @@
                                         (dissoc :dependents)
                                         (dissoc :parents)))))]
            #_(mapv #(println (pr-str %)) v)
-           #_(pprint/print-table-2 ;; must-disable
+           #_(pprint/print-table-2                          ;; must-disable
                [:lib :mvn/version :mvn/classifier :mvn/repo-id :mvn/repo-url :deps/manifest :cdx/sha-256]
                v
                {:to-file "test-resources/deps-test-libs.edn"})
@@ -62,7 +62,7 @@
                                          :deps-edn-file "test-resources/deps-test.edn"} 123)
                  v (->> (cdx/deps-edn->libs opts)
                         (cdx/libs->bom-components opts))]
-             #_(pprint/print-table-2 ;; must-disable
+             #_(pprint/print-table-2                        ;; must-disable
                  [:group :name :version :purl :bom-ref :hashes :type]
                  v
                  {:to-file "test-resources/components-bom.edn"})
@@ -80,7 +80,7 @@
                                 :deps-edn-file "test-resources/deps-git.edn"} 123)
         v (->> (cdx/deps-edn->libs opts)
                (cdx/libs->bom-components opts))]
-    #_(pprint/print-table-2 ;; must-disable
+    #_(pprint/print-table-2                                 ;; must-disable
         [:group :name :version :purl :bom-ref :hashes :type]
         v
         {:to-file "test-resources/components-bom-git.edn"} #_{})
@@ -154,7 +154,7 @@
                                                     (when (some? x)
                                                       "git-sha")))
                                  (update :git/url identity)))))]
-    #_(pprint/print-table-2 ;; must-disable
+    #_(pprint/print-table-2                                 ;; must-disable
         [:lib :git/sha :git/url :mvn/version :mvn/classifier :mvn/repo-id :mvn/repo-url
          :deps/manifest :cdx/sha-256]
         v
@@ -194,8 +194,8 @@
     #_(cdx/deps-edn->bom-js-string opts)
     #_(spit "test-resources/sbom-deps-local-subfolder.json" ;; must-disable
             (cdx/deps-edn->bom-js-string opts))
-    (is (= (json/parse-string (slurp "test-resources/sbom-deps-local-subfolder.json"))
-           (json/parse-string (cdx/deps-edn->bom-js-string opts))))))
+    (is (= (json/read-str (slurp "test-resources/sbom-deps-local-subfolder.json"))
+           (json/read-str (cdx/deps-edn->bom-js-string opts))))))
 
 
 (deftest full-sbom
@@ -205,10 +205,10 @@
                 :version       "bd2e8246f5e042820ab26fa7bf9007e43dc79513"
                 :purl          sample-purl}
                1771008495)]
-    #_(spit "test-resources/sbom-test.json" ;; must-disable
+    #_(spit "test-resources/sbom-test.json"                 ;; must-disable
             (cdx/deps-edn->bom-js-string opts))
-    (is (= (json/parse-string (slurp "test-resources/sbom-test.json"))
-           (json/parse-string (cdx/deps-edn->bom-js-string opts))))))
+    (is (= (json/read-str (slurp "test-resources/sbom-test.json"))
+           (json/read-str (cdx/deps-edn->bom-js-string opts))))))
 
 
 (deftest full-sbom-2
@@ -218,12 +218,12 @@
                 :version       "bd2e8246f5e042820ab26fa7bf9007e43dc79513"
                 :purl          sample-purl}
                1771008495)]
-    #_(spit "test-resources/sbom-test-2.json" ;; must-disable
+    #_(spit "test-resources/sbom-test-2.json"               ;; must-disable
             (cdx/deps-edn->bom-js-string opts))
-    (is (= (json/parse-string (cdx/deps-edn->bom-js-string opts))
-           (json/parse-string (cdx/deps-edn->bom-js-string opts))))
-    (is (= (json/parse-string (slurp "test-resources/sbom-test-2.json"))
-           (json/parse-string (cdx/deps-edn->bom-js-string opts))))))
+    (is (= (json/read-str (cdx/deps-edn->bom-js-string opts))
+           (json/read-str (cdx/deps-edn->bom-js-string opts))))
+    (is (= (json/read-str (slurp "test-resources/sbom-test-2.json"))
+           (json/read-str (cdx/deps-edn->bom-js-string opts))))))
 
 
 (deftest full-sbom-aliases
@@ -234,11 +234,11 @@
                 :purl          sample-purl
                 :aliases       [:test]}
                1771008495)]
-    #_(spit "test-resources/sbom-test-aliases.json" ;; must-disable
+    #_(spit "test-resources/sbom-test-aliases.json"         ;; must-disable
             (cdx/deps-edn->bom-js-string opts))
     #_(cdx/deps-edn->bom-js-string opts)
-    (is (= (json/parse-string (slurp "test-resources/sbom-test-aliases.json"))
-           (json/parse-string (cdx/deps-edn->bom-js-string opts))))))
+    (is (= (json/read-str (slurp "test-resources/sbom-test-aliases.json"))
+           (json/read-str (cdx/deps-edn->bom-js-string opts))))))
 
 
 (deftest full-sbom-aliases-build
@@ -249,11 +249,11 @@
                 :purl          "pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e"
                 :aliases       [:test :build]}
                1771008495)]
-    #_(spit "test-resources/sbom-test-aliases-build.json" ;; must-disable
+    #_(spit "test-resources/sbom-test-aliases-build.json"   ;; must-disable
             (cdx/deps-edn->bom-js-string opts))
     #_(cdx/deps-edn->bom-js-string opts)
-    (is (= (json/parse-string (slurp "test-resources/sbom-test-aliases-build.json"))
-           (json/parse-string (cdx/deps-edn->bom-js-string opts))))))
+    (is (= (json/read-str (slurp "test-resources/sbom-test-aliases-build.json"))
+           (json/read-str (cdx/deps-edn->bom-js-string opts))))))
 
 
 (deftest dependencies
