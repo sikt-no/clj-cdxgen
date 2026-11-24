@@ -1044,7 +1044,7 @@
                 (or purl
                     (default-self-purl (:group opts')
                                        (:name opts')
-                                       "0.1.12" ;; patch-self-version
+                                       "0.1.13" ;; patch-self-version
                                        #_asdf)))
         opts'' (assoc opts' :purl purl')]
     (assoc opts'' :bom-ref (get opts'' :bom-ref purl'))))
