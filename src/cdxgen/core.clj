@@ -963,8 +963,6 @@
           (printerrln ""))
         js))))
 
-(def default-name (delay
-                    "clj-cdxgen" #_(.getName (.getParentFile (.getAbsoluteFile (jio/file "."))))))
 
 ; "purl" : "pkg:maven/io.github.tonsky/clj-reload@1.0.0?type=jar&repository_url=https://repo.clojars.org/",
 (defn default-self-purl [group-id artifact coord]
@@ -991,9 +989,11 @@
 
 (defn adapted-opts
   [{:keys [deps-edn-file out-file epoch-seconds group progress version purl
-           err-exit-fn exclude-aliases]
+           err-exit-fn exclude-aliases
+           default-name]
     :as   opts}
    now-epoch-seconds2]
+  (assert (string? default-name))
   (let [deps-edn-file' (or deps-edn-file "deps.edn")
         name' (get opts :name)
         type' (get opts :type)
@@ -1021,8 +1021,8 @@
                :epoch-seconds   (let [v (or epoch-seconds now-epoch-seconds2)]
                                   (assert (pos-int? v))
                                   v)
-               :group           (not-empty-string (or group @default-name))
-               :name            (not-empty-string (or name' @default-name))
+               :group           (not-empty-string (or group default-name))
+               :name            (not-empty-string (or name' default-name))
                :version         (not-empty-string (or version (git-head-sha ".")))
                :type            (not-empty-string (or type' "application"))
                :tool-version    (if-let [v (find-version "com.github.sikt-no" "clj-cdxgen")]
@@ -1053,6 +1053,9 @@
 (defn write-sbom! [opts]
   (let [{:keys [out-file] :as opts'} (adapted-opts
                                        (assoc opts
+                                         :default-name (.getName
+                                                         (.getParentFile
+                                                           (.getAbsoluteFile (jio/file "."))))
                                          :err-exit-fn (fn [code] (System/exit code)))
                                        (now-epoch-seconds))
         js (deps-edn->bom-js-string opts')]

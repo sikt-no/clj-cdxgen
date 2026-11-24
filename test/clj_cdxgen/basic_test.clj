@@ -59,6 +59,7 @@
   (is (= (try
            (let [opts (cdx/adapted-opts {:version       "bd2e8246f5e042820ab26fa7bf9007e43dc79513"
                                          :purl          "my-pkg"
+                                         :default-name  "clj-cdxgen"
                                          :deps-edn-file "test-resources/deps-test.edn"} 123)
                  v (->> (cdx/deps-edn->libs opts)
                         (cdx/libs->bom-components opts))]
@@ -77,6 +78,7 @@
 (deftest git
   (let [opts (cdx/adapted-opts {:version       "self-version"
                                 :purl          "my-pkg"
+                                :default-name  "clj-cdxgen"
                                 :deps-edn-file "test-resources/deps-git.edn"} 123)
         v (->> (cdx/deps-edn->libs opts)
                (cdx/libs->bom-components opts))]
@@ -89,7 +91,8 @@
 
 
 (deftest git-purl
-  (let [opts (cdx/adapted-opts {:deps-edn-file "test-resources/deps-git.edn"} 123)
+  (let [opts (cdx/adapted-opts {:deps-edn-file "test-resources/deps-git.edn"
+                                :default-name  "clj-cdxgen"} 123)
         v (->> (cdx/deps-edn->libs opts)
                (cdx/libs->bom-components opts)
                (filterv (fn [{:keys [purl]}]
@@ -106,7 +109,8 @@
 
 
 (deftest maven-purl
-  (let [opts (cdx/adapted-opts {:deps-edn-file "test-resources/deps-git.edn"} 123)
+  (let [opts (cdx/adapted-opts {:deps-edn-file "test-resources/deps-git.edn"
+                                :default-name  "clj-cdxgen"} 123)
         v (->> (cdx/deps-edn->libs opts)
                (cdx/libs->bom-components opts)
                (filterv (fn [{:keys [purl]}] (str/starts-with? purl "pkg:maven/")))
@@ -124,7 +128,8 @@
 
 
 (deftest maven-purl-classifier
-  (let [opts (cdx/adapted-opts {:deps-edn-file "test-resources/deps-test.edn"} 123)
+  (let [opts (cdx/adapted-opts {:deps-edn-file "test-resources/deps-test.edn"
+                                :default-name  "clj-cdxgen"} 123)
         v (->> (cdx/deps-edn->libs opts)
                (cdx/libs->bom-components opts)
                (filterv (fn [{:keys [purl]}]
@@ -176,6 +181,7 @@
                        {:deps-edn-file "test-resources/deps-absolute.edn"
                         :group         "org.codeberg"
                         :version       "bd2e8246f5e042820ab26fa7bf9007e43dc79513"
+                        :default-name  "clj-cdxgen"
                         :purl          sample-purl}
                        1771008495)]
             (cdx/deps-edn->bom-js-string opts)
@@ -189,6 +195,7 @@
                {:deps-edn-file "test-resources/deps-local-subfolder.edn"
                 :group         "org.codeberg"
                 :version       "bd2e8246f5e042820ab26fa7bf9007e43dc79513"
+                :default-name  "clj-cdxgen"
                 :purl          sample-purl}
                1771008495)]
     #_(cdx/deps-edn->bom-js-string opts)
@@ -203,6 +210,7 @@
                {:deps-edn-file "test-resources/deps-test.edn"
                 :group         "org.codeberg"
                 :version       "bd2e8246f5e042820ab26fa7bf9007e43dc79513"
+                :default-name  "clj-cdxgen"
                 :purl          sample-purl}
                1771008495)]
     #_(spit "test-resources/sbom-test.json"                 ;; must-disable
@@ -216,6 +224,7 @@
                {:deps-edn-file "test-resources/deps-test-2.edn"
                 :group         "org.codeberg"
                 :version       "bd2e8246f5e042820ab26fa7bf9007e43dc79513"
+                :default-name  "clj-cdxgen"
                 :purl          sample-purl}
                1771008495)]
     #_(spit "test-resources/sbom-test-2.json"               ;; must-disable
@@ -232,6 +241,7 @@
                 :group         "org.codeberg"
                 :version       "self-version"
                 :purl          sample-purl
+                :default-name  "clj-cdxgen"
                 :aliases       [:test]}
                1771008495)]
     #_(spit "test-resources/sbom-test-aliases.json"         ;; must-disable
@@ -247,6 +257,7 @@
                 :group         "org.codeberg"
                 :version       "self-version"
                 :purl          "pkg:generic/asdf/asdf@bee00c76fa69eccdd8653b916a5452bba719e78e?vcs_url=git@github.com:janei/janei.git%40bee00c76fa69eccdd8653b916a5452bba719e78e"
+                :default-name  "clj-cdxgen"
                 :aliases       [:test :build]}
                1771008495)]
     #_(spit "test-resources/sbom-test-aliases-build.json"   ;; must-disable
@@ -257,7 +268,9 @@
 
 
 (deftest dependencies
-  (let [opts (cdx/adapted-opts {:deps-edn-file "test-resources/deps-dependencies-test.edn"} 123)
+  (let [opts (cdx/adapted-opts
+               {:deps-edn-file "test-resources/deps-dependencies-test.edn"
+                :default-name  "clj-cdxgen"} 123)
         v (->> (cdx/deps-edn->libs opts)
                (cdx/libs->dependencies opts)
                (filterv (fn [x]
@@ -287,7 +300,8 @@
             "pkg:maven/org.clj-commons/primitive-math@1.0.1?type=jar&repository_url=https://repo.clojars.org/"
             "pkg:maven/org.clojure/tools.logging@1.3.1?type=jar&repository_url=https://repo1.maven.org/maven2/"
             "pkg:maven/potemkin/potemkin@0.4.8?type=jar&repository_url=https://repo.clojars.org/"])))
-  (let [opts' (cdx/adapted-opts {:deps-edn-file "test-resources/deps-dependencies-test.edn"} 123)
+  (let [opts' (cdx/adapted-opts {:deps-edn-file "test-resources/deps-dependencies-test.edn"
+                                 :default-name  "clj-cdxgen"} 123)
         v' (->> (cdx/deps-edn->libs opts')
                 (cdx/libs->dependencies opts')
                 (filterv (fn [x]
@@ -305,6 +319,7 @@
 (deftest self-dependencies
   (let [opts (cdx/adapted-opts {:version       "self-version"
                                 :purl          "my-pkg"
+                                :default-name  "clj-cdxgen"
                                 :deps-edn-file "test-resources/deps-dependencies-test.edn"} 123)
         v (->> (cdx/deps-edn->libs opts)
                (cdx/libs->dependencies opts)

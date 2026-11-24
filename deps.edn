@@ -51,8 +51,9 @@
                              :exec-fn pre-commit-no-dev-lines-enabled/run}
 
            :test            {:extra-paths ["test" "test-resources"]
-                             :extra-deps  {io.github.cognitect-labs/test-runner
-                                           {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
+                             :extra-deps  {io.github.ivarref/test-runner
+                                           {:git/sha "f907727d8797c3ac6a4efd9ddec2d15c8320ede9"
+                                            :git/tag "0.1.99"}}
 
                              :jvm-opts    ["-Dclj-commons.ansi.enabled=true"]
                              :exec-fn     cognitect.test-runner.api/test}
